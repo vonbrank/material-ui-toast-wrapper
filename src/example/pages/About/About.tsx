@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import reactLogo from "../../assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./About.css";
+import { useToast } from "../../../lib";
 
 const About = () => {
   const [count, setCount] = useState(0);
+
+  const { showTemporaryText } = useToast();
+
+  useEffect(() => {
+    if (count > 0) showTemporaryText({ message: `count is ${count}` });
+  }, [count]);
 
   return (
     <>
