@@ -1,0 +1,7 @@
+.Toast-root {
+  box-sizing: border-box;
+}
+
+.Toast-root * {
+  box-sizing: inherit;
+}
