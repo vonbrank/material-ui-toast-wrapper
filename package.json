@@ -3,6 +3,19 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "files": [
+    "lib"
+  ],
+  "main": "./lib/material-ui-toast-wrapper.umd.cjs",
+  "module": "./lib/material-ui-toast-wrapper.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/material-ui-toast-wrapper.js",
+      "require": "./lib/material-ui-toast-wrapper.umd.cjs",
+      "types": "./lib/index.d.ts"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
