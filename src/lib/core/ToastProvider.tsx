@@ -13,8 +13,14 @@ interface ToastContext {
   ) => void;
 }
 
+interface ToastProviderConfig {
+  defaultTimePersist?: number;
+  timeInOut?: number;
+}
+
 interface ToastProviderProps {
   children?: React.ReactNode;
+  config?: ToastProviderConfig;
 }
 
 export const toastContext = createContext<ToastContext>({
@@ -24,7 +30,9 @@ export const toastContext = createContext<ToastContext>({
 });
 
 export const ToastProvider = (props: ToastProviderProps) => {
-  const { children } = props;
+  const { children, config = {} } = props;
+  const { defaultTimePersist = 5000, timeInOut } = config;
+
   const [alertList, setAlertList] = useState<AlertBase[]>([]);
   const addAlert = (newAlert: AlertBase) => {
     setAlertList((current) => [newAlert, ...current]);
@@ -34,10 +42,9 @@ export const ToastProvider = (props: ToastProviderProps) => {
   };
   const showTemporaryText = async (
     alert: { severity?: AlertColor; message: string },
-    autoHideDuration = 5000
+    autoHideDuration = defaultTimePersist
   ) => {
     const alertId = uuidv4();
-    console.log(`showTemporaryText: alertId = ${alertId}`);
     addAlert({ ...alert, alertId: alertId });
     if (autoHideDuration > 0) {
       await delay(autoHideDuration);
@@ -49,7 +56,11 @@ export const ToastProvider = (props: ToastProviderProps) => {
       value={{ addAlert, removeAlertById, showTemporaryText }}
     >
       {children}
-      <Toast alertList={alertList} removeAlertById={removeAlertById} />
+      <Toast
+        alertList={alertList}
+        removeAlertById={removeAlertById}
+        timeout={timeInOut}
+      />
     </toastContext.Provider>
   );
 };
