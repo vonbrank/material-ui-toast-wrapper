@@ -39,7 +39,7 @@ export const Toast = (props: ToastProps) => {
   const minWidth600 = useMediaQuery("(min-width:600px)");
 
   return (
-    <Snackbar open={true} className={`${styles["Toast-root"]}`}>
+    <Snackbar open={open} className={`${styles["Toast-root"]}`}>
       <Box sx={{ mt: 1, width: minWidth600 ? "36rem" : "100%" }}>
         <List>
           <TransitionGroup>
